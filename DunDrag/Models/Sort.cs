@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using DunDrag.Data;
 
 namespace DunDrag.Models
@@ -33,5 +34,12 @@ namespace DunDrag.Models
         public string Description { get; set; }
 
         public string Resume { get; set; }
+
+        public string Source { get; set; }
+
+        public List<PersonnageSort> PersonnagesSorts { get; } = new List<PersonnageSort>();
+
+        public List<SortClasse> SortsClasses { get; } = new List<SortClasse>();
     }
+    
 }

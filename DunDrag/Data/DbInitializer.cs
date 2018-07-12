@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using DunDrag.Models;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DunDrag.Data
 {
@@ -10,33 +15,174 @@ namespace DunDrag.Data
         {
             context.Database.EnsureCreated();
 
-            // Look for any Sorts.
-            if (context.Sorts.Any())
+            if (!context.Classes.Any())
             {
-                return; // DB has been seeded
+                context.Classes.AddRange(new List<Classe>
+                {
+                    new Classe
+                    {
+                        Nom = "Barde"
+                    },
+                    new Classe
+                    {
+                        Nom = "Clerc"
+                    },
+                    new Classe
+                    {
+                        Nom = "Druide"
+                    },
+                    new Classe
+                    {
+                        Nom = "Ensorceleur"
+                    },
+                    new Classe
+                    {
+                        Nom = "Magicien"
+                    },
+                    new Classe
+                    {
+                        Nom = "Paladin"
+                    },
+                    new Classe
+                    {
+                        Nom = "Rôdeur"
+                    },
+                    new Classe
+                    {
+                        Nom = "Sorcier"
+                    }
+                });
+                context.SaveChanges();
             }
 
-            var sorts = new[]
-            {
-                new Sort
-                {
-                    Nom = "Agrandissement/Rapetissement",
-                    Niveau = 2,
-                    Ecole = Ecole.Transmutation,
-                    Incantation = "1 action",
-                    Portee = "9 mètres",
-                    Composantes = "V, S, M (une pincée de poudre de fer)",
-                    Duree = "concentration, jusqu'à 1 minute",
-                    Description = "Vous agrandissez ou réduisez en taille une créature ou un objet que vous pouvez voir et qui est à portée pour la durée du sort. Choisissez une créature ou un objet qui n'est pas porté ou transporté. Si la cible n'est pas consentante, elle peut effectuer un jet de sauvegarde de Constitution. En cas de succès, le sort n'a aucun effet." + Environment.NewLine + "Si la cible est une créature, toutes les choses qu'elle porte et transporte changent de taille avec elle. Tout objet lâché par la créature affectée reprend sa taille normale. " + Environment.NewLine + "Agrandissement. La cible double dans toutes les dimensions, et son poids est multiplié par huit. Cela augmente sa taille d'une catégorie, de M à G par exemple. S'il n'y a pas assez de place dans la pièce pour que la cible double de taille, la créature ou l'objet atteint la taille maximale possible dans l'espace disponible. Jusqu'à la fin du sort, la cible a aussi l'avantage à ses jets de Force et ses jets de sauvegarde de Force. Les armes de la cible grandissent également. Tant que ces armes sont agrandies, les attaques de la cible occasionnent 1d4 dégâts supplémentaires. " + Environment.NewLine + "Rapetissement. La taille de la cible est diminuée de moitié dans toutes les dimensions, et son poids est divisé par huit. Cette réduction diminue sa taille d'une catégorie, de M à P par exemple. Jusqu'à la fin du sort, la cible a un désavantage à ses jets de Force et à ses jets de sauvegarde de Force. Les armes de la cible rapetissent aussi. Tant que ces armes sont réduites, les attaques de la cible occasionnent 1d4 dégâts en moins (minimum 1 point de dégâts). "
-                }
-            };
 
-            foreach (Sort s in sorts)
+            if (!context.Sorts.Any())
             {
-                context.Sorts.Add(s);
+                var regexNiveauEcole = new Regex(@"^niveau\s+(?<niveau>[0-9])\s+\-\s+(?<ecole>\w+)(?<rituel>\s+\(rituel\))?$",
+                    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
+                XElement root = XElement.Load(".\\Data\\sorts.xml");
+                IEnumerable<XElement> sortElements = root.Elements("div");
+                foreach (XElement el in sortElements)
+                {
+                    var sort = new Sort();
+                    sort.Nom = el.Elements().ElementAt(0).Value;
+                    var matchNiveauEcole =
+                        regexNiveauEcole.Match(el.Elements().ElementAt(1).Elements().ElementAt(0).Value);
+                    if (matchNiveauEcole.Success)
+                    {
+                        sort.Niveau = Convert.ToInt32(matchNiveauEcole.Groups["niveau"].Value);
+                        sort.Ecole = DecodeLibelleEcole(matchNiveauEcole.Groups["ecole"].Value);
+                        if (matchNiveauEcole.Groups["rituel"].Success)
+                        {
+                            sort.Rituel = true;
+                        }
+                    }
+                    else
+                    {
+                        Trace.WriteLine("Ca va pas");
+                    }
+
+                    sort.Incantation = el.Elements().ElementAt(2).Value;
+                    sort.Portee = el.Elements().ElementAt(3).Value;
+                    sort.Composantes = el.Elements().ElementAt(4).Value;
+                    sort.Duree = el.Elements().ElementAt(5).Value;
+                    sort.Description = el.Elements().ElementAt(6).ToString();
+                    var source = el.Elements().ElementAt(8).Value.Split(";");
+                    sort.Source = source[0];
+                    
+                    context.Sorts.Add(sort);
+                    context.SaveChanges();
+                    for (int i = 1; i < source.Length; i++)
+                    {
+                        sort.SortsClasses.Add(new SortClasse { SortId = sort.Id, ClasseId = context.Classes.First(c => string.Compare(c.Nom, source[i].Trim(), StringComparison.InvariantCultureIgnoreCase) == 0).Id });
+                    }
+                }
+            }
+
+            if (!context.Personnages.Any())
+            {
+                context.Personnages.AddRange(new List<Personnage>
+                {
+                    new Personnage
+                    {
+                        Nom = "Arkenos Entropie",
+                        Niveau = 5
+                    }
+                });
+            }
+
+            if (!context.Langues.Any())
+            {
+                context.Langues.AddRange(new List<Langue>
+                {
+                    new Langue{ Nom = "Commun"},
+                    new Langue{ Nom = "Elfique"},
+                    new Langue{ Nom = "Géant"},
+                    new Langue{ Nom = "Gnome"},
+                    new Langue{ Nom = "Gobelin"},
+                    new Langue{ Nom = "Halfelin"},
+                    new Langue{ Nom = "Nain"},
+                    new Langue{ Nom = "Orque"},
+                    new Langue{ Nom = "Abyssal"},
+                    new Langue{ Nom = "Céleste"},
+                    new Langue{ Nom = "Commun des profondeurs"},
+                    new Langue{ Nom = "Draconique"},
+                    new Langue{ Nom = "Infernal"},
+                    new Langue{ Nom = "Primordial"},
+                    new Langue{ Nom = "Profond"},
+                    new Langue{ Nom = "Sylvain"}
+                });
+            }
+
+            if (!context.Competences.Any())
+            {
+                context.Competences.AddRange(new List<Competence>
+                {
+                    new Competence{ Nom = "Acrobaties", CaracteristiqueAssociee = CaracteristiqueEnum.Dexterite},
+                    new Competence{ Nom = "Dressage", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
+                    new Competence{ Nom = "Arcanes", CaracteristiqueAssociee = CaracteristiqueEnum.Force},
+                    new Competence{ Nom = "Athlétisme", CaracteristiqueAssociee = CaracteristiqueEnum.Dexterite},
+                    new Competence{ Nom = "Tromperie", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
+                    new Competence{ Nom = "Histoire", CaracteristiqueAssociee = CaracteristiqueEnum.Dexterite},
+                    new Competence{ Nom = "Intimidation", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
+                    new Competence{ Nom = "Investigation", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme},
+                    new Competence{ Nom = "Médecine", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
+                    new Competence{ Nom = "Nature", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
+                    new Competence{ Nom = "Perception", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
+                    new Competence{ Nom = "Perspicacité", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
+                    new Competence{ Nom = "Representation", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
+                    new Competence{ Nom = "Persuasion", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme},
+                    new Competence{ Nom = "Religion", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
+                    new Competence{ Nom = "Escamotage", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
+                    new Competence{ Nom = "Discrétion", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme},
+                    new Competence{ Nom = "Survie", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme}
+                });
+            }
+
+            if (!context.Caracteristiques.Any())
+            {
+                context.Caracteristiques.AddRange(new List<Caracteristique>
+                {
+                    new Caracteristique{ Nom = "Force", CaracteristiqueEnum = CaracteristiqueEnum.Force},
+                    new Caracteristique{ Nom = "Dextérité", CaracteristiqueEnum = CaracteristiqueEnum.Dexterite},
+                    new Caracteristique{ Nom = "Constitution", CaracteristiqueEnum = CaracteristiqueEnum.Constitution},
+                    new Caracteristique{ Nom = "Intelligence", CaracteristiqueEnum = CaracteristiqueEnum.Intelligence},
+                    new Caracteristique{ Nom = "Sagesse", CaracteristiqueEnum = CaracteristiqueEnum.Sagesse},
+                    new Caracteristique{ Nom = "Charisme", CaracteristiqueEnum = CaracteristiqueEnum.Charisme}
+                });
             }
 
             context.SaveChanges();
+        }
+
+        private static Ecole DecodeLibelleEcole(string ecole)
+        {
+            if (Enum.TryParse(typeof(Ecole), ecole.Replace("é", "e"), true, out var enumEcole))
+            {
+                return (Ecole)enumEcole;
+            }
+
+            throw new Exception();
         }
     }
 }

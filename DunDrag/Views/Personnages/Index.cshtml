@@ -1,0 +1,221 @@
+﻿@model IEnumerable<DunDrag.Models.Personnage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Classe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Race)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Experience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClasseArmure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Initiative)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vitesse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvMaximum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvTemporaires)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvActuels)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DesDeVie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Niveau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Taille)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Yeux)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Peau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cheveux)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Poids)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Historique)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomJoueur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alignement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TraitsDePersonnalite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ideaux)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Liens)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Defauts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiecesCuivre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiecesArgent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiecesEthereum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiecesOr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiecesPlatine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DesDeSauvegardeContreSorts)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BonusAttaqueAvecSort)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Classe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Race)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Experience)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClasseArmure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Initiative)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vitesse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PvMaximum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PvTemporaires)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PvActuels)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesDeVie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Niveau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Taille)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Yeux)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Peau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cheveux)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Poids)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Historique)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomJoueur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alignement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TraitsDePersonnalite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ideaux)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Liens)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Defauts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiecesCuivre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiecesArgent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiecesEthereum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiecesOr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiecesPlatine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesDeSauvegardeContreSorts)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BonusAttaqueAvecSort)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

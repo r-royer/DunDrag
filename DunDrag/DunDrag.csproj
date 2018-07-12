@@ -5,8 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180712120112_Langue.cs" />
+    <Compile Remove="Migrations\20180712120112_Langue.Designer.cs" />
+    <Compile Remove="Migrations\20180712123916_Competence.cs" />
+    <Compile Remove="Migrations\20180712123916_Competence.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\sorts.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
