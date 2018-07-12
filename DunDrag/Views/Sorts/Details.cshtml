@@ -1,0 +1,78 @@
+﻿@model DunDrag.Models.Sort
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sort</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Niveau)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Niveau)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ecole)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ecole)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Incantation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Incantation)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Rituel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Rituel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Portee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Portee)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Composantes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Composantes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Duree)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Duree)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Resume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Resume)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

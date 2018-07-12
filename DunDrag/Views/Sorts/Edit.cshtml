@@ -1,0 +1,81 @@
+﻿@model DunDrag.Models.Sort
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Sort</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class="form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Niveau" class="control-label"></label>
+                <input asp-for="Niveau" class="form-control" />
+                <span asp-validation-for="Niveau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ecole" class="control-label"></label>
+                <select asp-for="Ecole" class="form-control" asp-items="Html.GetEnumSelectList<Ecole>()"></select>
+                <span asp-validation-for="Ecole" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Incantation" class="control-label"></label>
+                <input asp-for="Incantation" class="form-control" />
+                <span asp-validation-for="Incantation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Rituel" /> @Html.DisplayNameFor(model => model.Rituel)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Portee" class="control-label"></label>
+                <input asp-for="Portee" class="form-control" />
+                <span asp-validation-for="Portee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Composantes" class="control-label"></label>
+                <input asp-for="Composantes" class="form-control" />
+                <span asp-validation-for="Composantes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duree" class="control-label"></label>
+                <input asp-for="Duree" class="form-control" />
+                <span asp-validation-for="Duree" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Resume" class="control-label"></label>
+                <input asp-for="Resume" class="form-control" />
+                <span asp-validation-for="Resume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
