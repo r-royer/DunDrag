@@ -35,3 +35,9 @@ body {
         display: none;
     }
 }
+
+.overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width : 30px
+}

@@ -9,6 +9,10 @@
     <Compile Remove="Migrations\20180712120112_Langue.Designer.cs" />
     <Compile Remove="Migrations\20180712123916_Competence.cs" />
     <Compile Remove="Migrations\20180712123916_Competence.Designer.cs" />
+    <Compile Remove="Migrations\20180713132855_DesDeVie.cs" />
+    <Compile Remove="Migrations\20180713132855_DesDeVie.Designer.cs" />
+    <Compile Remove="Migrations\20180713133203_DesDeVie.cs" />
+    <Compile Remove="Migrations\20180713133203_DesDeVie.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

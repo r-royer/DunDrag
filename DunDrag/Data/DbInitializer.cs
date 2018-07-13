@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 using DunDrag.Models;
 
@@ -55,47 +58,37 @@ namespace DunDrag.Data
                 context.SaveChanges();
             }
 
-
             if (!context.Sorts.Any())
             {
-                var regexNiveauEcole = new Regex(@"^niveau\s+(?<niveau>[0-9])\s+\-\s+(?<ecole>\w+)(?<rituel>\s+\(rituel\))?$",
-                    RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.Singleline);
-                XElement root = XElement.Load(".\\Data\\sorts.xml");
-                IEnumerable<XElement> sortElements = root.Elements("div");
-                foreach (XElement el in sortElements)
+                var xmlDocument = new XmlDocument();
+                xmlDocument.Load(".\\Data\\sorts.xml");
+                foreach (XmlNode childNode in xmlDocument["Sorts"].ChildNodes)
                 {
-                    var sort = new Sort();
-                    sort.Nom = el.Elements().ElementAt(0).Value;
-                    var matchNiveauEcole =
-                        regexNiveauEcole.Match(el.Elements().ElementAt(1).Elements().ElementAt(0).Value);
-                    if (matchNiveauEcole.Success)
+                    var sort = new Sort
                     {
-                        sort.Niveau = Convert.ToInt32(matchNiveauEcole.Groups["niveau"].Value);
-                        sort.Ecole = DecodeLibelleEcole(matchNiveauEcole.Groups["ecole"].Value);
-                        if (matchNiveauEcole.Groups["rituel"].Success)
-                        {
-                            sort.Rituel = true;
-                        }
-                    }
-                    else
-                    {
-                        Trace.WriteLine("Ca va pas");
-                    }
-
-                    sort.Incantation = el.Elements().ElementAt(2).Value;
-                    sort.Portee = el.Elements().ElementAt(3).Value;
-                    sort.Composantes = el.Elements().ElementAt(4).Value;
-                    sort.Duree = el.Elements().ElementAt(5).Value;
-                    sort.Description = el.Elements().ElementAt(6).ToString();
-                    var source = el.Elements().ElementAt(8).Value.Split(";");
-                    sort.Source = source[0];
-                    
+                        Nom = childNode["Nom"].InnerText,
+                        Niveau = Convert.ToInt32(childNode["Niveau"].InnerText),
+                        Ecole = (Ecole)Enum.Parse(typeof(Ecole), childNode["Ecole"].InnerText, true),
+                        Rituel = bool.Parse(childNode["Rituel"].InnerText),
+                        Incantation = childNode["Incantation"].InnerText,
+                        Portee = childNode["Portee"].InnerText,
+                        Composantes = childNode["Composantes"].InnerText,
+                        Duree = childNode["Duree"].InnerText,
+                        Description = childNode["Description"].InnerXml,
+                        Source = childNode["Source"].InnerText
+                    };
                     context.Sorts.Add(sort);
                     context.SaveChanges();
-                    for (int i = 1; i < source.Length; i++)
+                    foreach (var classe in childNode["Classes"].InnerText.Split(";"))
                     {
-                        sort.SortsClasses.Add(new SortClasse { SortId = sort.Id, ClasseId = context.Classes.First(c => string.Compare(c.Nom, source[i].Trim(), StringComparison.InvariantCultureIgnoreCase) == 0).Id });
+                        sort.SortsClasses.Add(new SortClasse
+                        {
+                            SortId = sort.Id,
+                            ClasseId = context.Classes.First(c => string.Compare(c.Nom, classe, StringComparison.InvariantCultureIgnoreCase) == 0).Id
+                        });
                     }
+
+                    context.SaveChanges();
                 }
             }
 
@@ -173,16 +166,6 @@ namespace DunDrag.Data
             }
 
             context.SaveChanges();
-        }
-
-        private static Ecole DecodeLibelleEcole(string ecole)
-        {
-            if (Enum.TryParse(typeof(Ecole), ecole.Replace("é", "e"), true, out var enumEcole))
-            {
-                return (Ecole)enumEcole;
-            }
-
-            throw new Exception();
         }
     }
 }

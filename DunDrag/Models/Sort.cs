@@ -39,6 +39,7 @@ namespace DunDrag.Models
 
         public List<PersonnageSort> PersonnagesSorts { get; } = new List<PersonnageSort>();
 
+        [Display(Name = "Classes")]
         public List<SortClasse> SortsClasses { get; } = new List<SortClasse>();
     }
     

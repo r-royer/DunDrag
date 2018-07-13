@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DunDrag.Data;
 using DunDrag.Models;
+using DunDrag.Tech;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DunDrag.Controllers
 {
@@ -18,9 +20,82 @@ namespace DunDrag.Controllers
         }
 
         // GET: Sorts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            Ecole? ecole,
+            int? classe,
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? page,
+            int? niveauMin,
+            int? niveauMax)
         {
-            return View(await _context.Sorts.ToListAsync());
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NomSortParam"] = String.IsNullOrEmpty(sortOrder) ? "nom_desc" : string.Empty;
+            ViewData["NiveauSortParam"] = String.IsNullOrEmpty(sortOrder) ? "niveau_desc" : "Niveau";
+            ViewData["Ecole"] = ecole;
+            ViewData["Classes"] = new SelectList(_context.Classes, "Id", "Nom");
+            ViewData["Classe"] = classe;
+            ViewData["NiveauMin"] = niveauMin ?? 0;
+            ViewData["NiveauMax"] = niveauMax ?? 9;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var sorts = from s in _context.Sorts select s;
+
+            if (ecole.HasValue && ecole.Value != Ecole.Toutes)
+            {
+                sorts = sorts.Where(s => s.Ecole == ecole.Value);
+            }
+
+            if (classe.HasValue && classe.Value >= 0)
+            {
+                sorts = sorts.Where(s => s.SortsClasses.Any(sc => sc.ClasseId == classe.Value));
+            }
+
+            if (niveauMin.HasValue)
+            {
+                sorts = sorts.Where(s => s.Niveau >= niveauMin);
+            }
+
+            if (niveauMax.HasValue)
+            {
+                sorts = sorts.Where(s => s.Niveau <= niveauMax);
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToUpperInvariant();
+                sorts = sorts.Where(s => s.Nom.ToUpperInvariant().Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "nom_desc":
+                    sorts = sorts.OrderByDescending(s => s.Nom);
+                    break;
+                case "Niveau":
+                    sorts = sorts.OrderBy(s => s.Niveau);
+                    break;
+                case "niveau_desc":
+                    sorts = sorts.OrderByDescending(s => s.Niveau);
+                    break;
+                default:
+                    sorts = sorts.OrderBy(s => s.Nom);
+                    break;
+            }
+
+            int pageSize = 10;
+            return View(await PaginatedList<Sort>.CreateAsync(sorts.Include(s => s.SortsClasses).ThenInclude(sc => sc.Classe).AsNoTracking(), page ?? 1, pageSize));
         }
 
         // GET: Sorts/Details/5
@@ -32,6 +107,8 @@ namespace DunDrag.Controllers
             }
 
             var sort = await _context.Sorts
+                .Include(s => s.SortsClasses)
+                .ThenInclude(sc => sc.Classe)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sort == null)
@@ -40,68 +117,6 @@ namespace DunDrag.Controllers
             }
 
             return View(sort);
-        }
-
-        // GET: Sorts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var sort = await _context.Sorts.FindAsync(id);
-            if (sort == null)
-            {
-                return NotFound();
-            }
-
-            return View(sort);
-        }
-
-        // POST: Sorts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost, ActionName("Edit")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPost(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentToUpdate = await _context.Sorts.SingleOrDefaultAsync(s => s.Id == id);
-            if (await TryUpdateModelAsync(
-                studentToUpdate,
-                "",
-                s => s.Nom,
-                s => s.Niveau,
-                s => s.Ecole,
-                s => s.Incantation,
-                s => s.Rituel,
-                s => s.Portee,
-                s => s.Composantes,
-                s => s.Duree,
-                s => s.Description,
-                s => s.Resume))
-            {
-                try
-                {
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException /* ex */)
-                {
-                    ModelState.AddModelError("", "Impossible d'enregistrer les changement, veuillez réessayer.");
-                }
-            }
-            return View(studentToUpdate);
-        }
-
-        private bool SortExists(int id)
-        {
-            return _context.Sorts.Any(e => e.Id == id);
         }
     }
 }

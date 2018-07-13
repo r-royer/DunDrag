@@ -19,7 +19,7 @@ namespace DunDrag.Controllers
         // GET: Personnages
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Personnages.ToListAsync());
+            return View(await _context.Personnages.Include(p => p.Classe).ToListAsync());
         }
 
         // GET: Personnages/Details/5
@@ -31,6 +31,13 @@ namespace DunDrag.Controllers
             }
 
             var personnage = await _context.Personnages
+                .Include(p => p.Classe)
+                .Include(p => p.PersonnagesCaracteristiques)
+                .ThenInclude(pc => pc.Caracteristique)
+                .Include(p => p.PersonnagesCompetences)
+                .ThenInclude(pc => pc.Competence)
+                .Include(p => p.PersonnagesLangues)
+                .ThenInclude(pc => pc.Langue)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (personnage == null)
             {
@@ -111,35 +118,6 @@ namespace DunDrag.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(personnage);
-        }
-
-        // GET: Personnages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var personnage = await _context.Personnages
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (personnage == null)
-            {
-                return NotFound();
-            }
-
-            return View(personnage);
-        }
-
-        // POST: Personnages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var personnage = await _context.Personnages.FindAsync(id);
-            _context.Personnages.Remove(personnage);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool PersonnageExists(int id)

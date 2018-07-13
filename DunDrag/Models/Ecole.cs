@@ -4,6 +4,8 @@ namespace DunDrag.Models
 {
     public enum Ecole
     {
+        Toutes = -1,
+
         Abjuration,
 
         Divination,

@@ -4,207 +4,525 @@
     ViewData["Title"] = "Details";
 }
 
+@section AddToHead{
+    <link href="@Url.Content("~/css/PersoSheet.css")" rel="stylesheet" type="text/css" />
+}
+
 <h2>Details</h2>
 
 <div>
     <h4>Personnage</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Classe)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Classe)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Race)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Race)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Experience)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Experience)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ClasseArmure)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ClasseArmure)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Initiative)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Initiative)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Vitesse)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Vitesse)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PvMaximum)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PvMaximum)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PvTemporaires)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PvTemporaires)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PvActuels)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PvActuels)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DesDeVie)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DesDeVie)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Niveau)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Niveau)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Taille)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Taille)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Yeux)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Yeux)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Peau)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Peau)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cheveux)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cheveux)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Poids)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Poids)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Historique)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Historique)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NomJoueur)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NomJoueur)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Alignement)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Alignement)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TraitsDePersonnalite)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TraitsDePersonnalite)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Ideaux)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Ideaux)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Liens)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Liens)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Defauts)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Defauts)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PiecesCuivre)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PiecesCuivre)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PiecesArgent)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PiecesArgent)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PiecesEthereum)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PiecesEthereum)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PiecesOr)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PiecesOr)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PiecesPlatine)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PiecesPlatine)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DesDeSauvegardeContreSorts)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DesDeSauvegardeContreSorts)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BonusAttaqueAvecSort)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BonusAttaqueAvecSort)
-        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Classe)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Classe)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Race)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Race)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Experience)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Experience)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ClasseArmure)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ClasseArmure)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Initiative)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Initiative)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Vitesse)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Vitesse)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PvMaximum)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PvMaximum)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PvTemporaires)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PvTemporaires)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PvActuels)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PvActuels)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DesDeVie)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DesDeVie)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nom)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nom)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Niveau)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Niveau)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Taille)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Taille)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Age)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Age)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Yeux)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Yeux)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Peau)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Peau)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cheveux)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cheveux)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Poids)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Poids)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Historique)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Historique)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NomJoueur)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NomJoueur)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Alignement)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Alignement)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TraitsDePersonnalite)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TraitsDePersonnalite)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Ideaux)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Ideaux)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Liens)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Liens)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Defauts)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Defauts)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PiecesCuivre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PiecesCuivre)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PiecesArgent)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PiecesArgent)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PiecesEthereum)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PiecesEthereum)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PiecesOr)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PiecesOr)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PiecesPlatine)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PiecesPlatine)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DesDeSauvegardeContreSorts)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DesDeSauvegardeContreSorts)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.BonusAttaqueAvecSort)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BonusAttaqueAvecSort)
+            </dd>*@
     </dl>
+
+    <form class="charsheet">
+        <header>
+            <section class="charname">
+                @Html.Label("Nom du personnage")
+                @Html.TextBoxFor(model => model.Nom, null, new { @readonly = true })
+            </section>
+            <section class="misc">
+                <ul>
+                    <li>
+                        @Html.LabelFor(model => model.Classe)
+                        @Html.TextBoxFor(model => model.Classe.Nom, null, new { @readonly = true })
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.Niveau)
+                        @Html.TextBoxFor(model => model.Niveau, null, new { @readonly = true })
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.NomJoueur)
+                        @Html.TextBoxFor(model => model.NomJoueur, null, new { @readonly = true })
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.Race)
+                        @Html.TextBoxFor(model => model.Race, null, new { @readonly = true })
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.Alignement)
+                        @Html.TextBoxFor(model => model.Alignement, null, new { @readonly = true })
+                    </li>
+                    <li>
+                        @Html.LabelFor(model => model.Experience)
+                        @Html.TextBoxFor(model => model.ExperienceEnCours, null, new { @readonly = true })
+                    </li>
+                </ul>
+            </section>
+        </header>
+        <main>
+            <section>
+                <section class="attributes">
+                    <div class="scores">
+                        <ul>
+                            @foreach (var personnageCaracteristiques in Model.PersonnagesCaracteristiques.OrderBy(pc => pc.Caracteristique.CaracteristiqueEnum))
+                            {
+                                <li>
+                                    <div class="score">
+                                        @Html.Label(personnageCaracteristiques.Caracteristique.Nom)
+                                        @Html.TextBox(personnageCaracteristiques.Caracteristique.Nom, personnageCaracteristiques.Valeur, new { @readonly = true })
+                                    </div>
+                                    <div class="modifier">
+                                        @Html.TextBox(string.Concat(personnageCaracteristiques.Caracteristique.Nom, "_Modifieur"), string.Concat("+", personnageCaracteristiques.Modifieur), new { @readonly = true })
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="attr-applications">
+                        <div class="inspiration box">
+                            <div class="label-container">
+                                @Html.Label("Inspiration")
+                            </div>
+                            @Html.CheckBox("Inspiration")
+                        </div>
+                        <div class="proficiencybonus box">
+                            <div class="label-container">
+                                <label for="proficiencybonus">Proficiency Bonus</label>
+                            </div>
+                            <input name="proficiencybonus" placeholder="+2" />
+                        </div>
+                        <div class="saves list-section box">
+                            <ul>
+                                <li>
+                                    <label for="Strength-save">Strength</label><input name="Strength-save" placeholder="+0" type="text" /><input name="Strength-save-prof" type="checkbox" />
+                                </li>
+                                <li>
+                                    <label for="Dexterity-save">Dexterity</label><input name="Dexterity-save" placeholder="+0" type="text" /><input name="Dexterity-save-prof" type="checkbox" />
+                                </li>
+                                <li>
+                                    <label for="Constitution-save">Constitution</label><input name="Constitution-save" placeholder="+0" type="text" /><input name="Constitution-save-prof" type="checkbox" />
+                                </li>
+                                <li>
+                                    <label for="Wisdom-save">Wisdom</label><input name="Wisdom-save" placeholder="+0" type="text" /><input name="Wisdom-save-prof" type="checkbox" />
+                                </li>
+                                <li>
+                                    <label for="Intelligence-save">Intelligence</label><input name="Intelligence-save" placeholder="+0" type="text" /><input name="Intelligence-save-prof" type="checkbox" />
+                                </li>
+                                <li>
+                                    <label for="Charisma-save">Charisma</label><input name="Charisma-save" placeholder="+0" type="text" /><input name="Charisma-save-prof" type="checkbox" />
+                                </li>
+                            </ul>
+                            <div class="label">
+                                Saving Throws
+                            </div>
+                        </div>
+                        <div class="skills list-section box">
+                            <ul>
+                                <li>&nbsp;M E</li>
+                                @foreach (var personnageCompetence in Model.PersonnagesCompetences)
+                                {
+                                    <li>
+                                        <label>
+                                            @personnageCompetence.Competence.Nom
+                                            <span class="skill">@string.Concat("(", personnageCompetence.Competence.CaracteristiqueAssociee.ToString().Substring(0, 3), ")")</span>
+                                        </label>
+                                        @Html.TextBox(personnageCompetence.Competence.Nom, Model.CalculerModificateurCompetence(personnageCompetence), new { @readonly = true })
+                                        @Html.CheckBox(string.Concat("Maitrise_", personnageCompetence.Competence.Nom), personnageCompetence.Maitrise)
+                                        @Html.CheckBox(string.Concat("Expertise_", personnageCompetence.Competence.Nom), personnageCompetence.Expertise)
+                                    </li>
+                                }
+                            </ul>
+                            <div class="label">
+                                Skills
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="passive-perception box">
+                    <div class="label-container">
+                        <label for="passiveperception">Perception passive (Sagesse)</label>
+                    </div>
+                    <input name="passiveperception" placeholder="10" />
+                </div>
+                <div class="otherprofs box textblock">
+                    @Html.Label("Langues et autres compétences")
+                    @Html.TextArea("otherprofs", string.Join(Environment.NewLine, Model.PersonnagesLangues.Select(pl => pl.Langue.Nom)), new { @readonly = true })
+                </div>
+            </section>
+            <section>
+                <section class="combat">
+                    <div class="armorclass">
+                        <div>
+                            @Html.LabelFor(model => model.ClasseArmure)
+                            @Html.TextBoxFor(model => model.ClasseArmure, null, new { @readonly = true })
+                        </div>
+                    </div>
+                    <div class="initiative">
+                        <div>
+                            @Html.LabelFor(model => model.Initiative)
+                            @Html.TextBoxFor(model => model.Initiative, null, new { @readonly = true })
+                        </div>
+                    </div>
+                    <div class="speed">
+                        <div>
+                            @Html.LabelFor(model => model.Vitesse)
+                            @Html.TextBox("vitesse", string.Concat(Model.Vitesse, " m"), null, new { @readonly = true })
+                        </div>
+                    </div>
+                    <div class="hp">
+                        <div class="regular">
+                            <div class="max">
+                                @Html.LabelFor(model => model.PvMaximum)
+                                @Html.TextBoxFor(model => model.PvMaximum, null, new { @readonly = true })
+                            </div>
+                            <div class="current">
+                                @Html.LabelFor(model => model.PvActuels)
+                                @Html.TextBoxFor(model => model.PvActuels, null, new { @readonly = true })
+                            </div>
+                        </div>
+                        <div class="temporary">
+                            @Html.LabelFor(model => model.PvTemporaires)
+                            @Html.TextBoxFor(model => model.PvTemporaires, null, new { @readonly = true })
+                        </div>
+                    </div>
+                    <div class="hitdice">
+                        <div>
+                            <div class="total">
+                                @Html.LabelFor(model => model.DesDeVieTotal)
+                                @Html.TextBox("DesDeVieTotal", string.Format("{0} {1}", Model.DesDeVieTotal, Model.TypeDesDeVie), new { @readonly = true })
+                            </div>
+                            <div class="remaining">
+                                @Html.TextBoxFor(model => model.DesDeVieActuels, null, new { @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="deathsaves">
+                        <div>
+                            <div class="label">
+                                <label>Death Saves</label>
+                            </div>
+                            <div class="marks">
+                                <div class="deathsuccesses">
+                                    <label>Successes</label>
+                                    <div class="bubbles">
+                                        <input name="deathsuccess1" type="checkbox" />
+                                        <input name="deathsuccess2" type="checkbox" />
+                                        <input name="deathsuccess3" type="checkbox" />
+                                    </div>
+                                </div>
+                                <div class="deathfails">
+                                    <label>Failures</label>
+                                    <div class="bubbles">
+                                        <input name="deathfail1" type="checkbox" />
+                                        <input name="deathfail2" type="checkbox" />
+                                        <input name="deathfail3" type="checkbox" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="attacksandspellcasting">
+                    <div>
+                        <label>Attacks & Spellcasting</label>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Atk Bonus
+                                    </th>
+                                    <th>
+                                        Damage/Type
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input name="atkname1" type="text" />
+                                    </td>
+                                    <td>
+                                        <input name="atkbonus1" type="text" />
+                                    </td>
+                                    <td>
+                                        <input name="atkdamage1" type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input name="atkname2" type="text" />
+                                    </td>
+                                    <td>
+                                        <input name="atkbonus2" type="text" />
+                                    </td>
+                                    <td>
+                                        <input name="atkdamage2" type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input name="atkname3" type="text" />
+                                    </td>
+                                    <td>
+                                        <input name="atkbonus3" type="text" />
+                                    </td>
+                                    <td>
+                                        <input name="atkdamage3" type="text" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <textarea></textarea>
+                    </div>
+                </section>
+                <section class="equipment">
+                    <div>
+                        @Html.Label("Equipement")
+                        <div class="money">
+                            <ul>
+                                <li>
+                                    @Html.LabelFor(model => model.PiecesCuivre)
+                                    @Html.TextBoxFor(model => model.PiecesCuivre, null, new {@readonly = true})
+                                </li>
+                                <li>
+                                    @Html.LabelFor(model => model.PiecesArgent)
+                                    @Html.TextBoxFor(model => model.PiecesArgent, null, new {@readonly = true})
+                                </li>
+                                <li>
+                                    @Html.LabelFor(model => model.PiecesEthereum)
+                                    @Html.TextBoxFor(model => model.PiecesEthereum, null, new {@readonly = true})
+                                </li>
+                                <li>
+                                    @Html.LabelFor(model => model.PiecesOr)
+                                    @Html.TextBoxFor(model => model.PiecesOr, null, new {@readonly = true})
+                                </li>
+                                <li>
+                                    @Html.LabelFor(model => model.PiecesPlatine)
+                                    @Html.TextBoxFor(model => model.PiecesPlatine, null, new {@readonly = true})
+                                </li>
+                            </ul>
+                        </div>
+                        @Html.TextArea("Equipement", "", new {@readonly = true})
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section class="flavor">
+                    <div class="personality">
+                        @Html.LabelFor(model => model.TraitsDePersonnalite)
+                        @Html.TextAreaFor(model => model.TraitsDePersonnalite, new {@readonly = true})
+                    </div>
+                    <div class="ideals">
+                        @Html.LabelFor(model => model.Ideaux)
+                        @Html.TextAreaFor(model => model.Ideaux, new { @readonly = true })
+                    </div>
+                    <div class="bonds">
+                        @Html.LabelFor(model => model.Liens)
+                        @Html.TextAreaFor(model => model.Liens, new { @readonly = true })
+                    </div>
+                    <div class="flaws">
+                        @Html.LabelFor(model => model.Defauts)
+                        @Html.TextAreaFor(model => model.Defauts, new { @readonly = true })
+                    </div>
+                </section>
+                <section class="features">
+                    <div>
+                        @Html.LabelFor(model => model.AutresCompetences)
+                        @Html.TextAreaFor(model => model.AutresCompetences, new { @readonly = true })
+                    </div>
+                </section>
+            </section>
+        </main>
+    </form>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retourner à la liste</a>
 </div>
