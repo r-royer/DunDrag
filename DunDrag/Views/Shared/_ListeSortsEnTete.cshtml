@@ -1,0 +1,86 @@
+﻿@using DunDrag.Tech
+
+@model PaginatedList<Sort>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div class="form-actions no-color">
+            <p>
+                @Html.Label("Ecole")
+                <select name="ecole" asp-for="@ViewData["Ecole"]" asp-items="Html.GetEnumSelectList<Ecole>()">
+                    <option value="-1" selected="selected"></option>
+                </select>
+                |
+                @Html.Label("Classe")
+                <select name="classe" asp-for="@ViewData["Classe"]" asp-items="(SelectList)@ViewData[" Classes"]">
+                    <option value="-1" selected="selected"></option>
+                </select>
+                |
+                @Html.Label("Niveau min")
+                <select name="niveauMin" asp-for="@ViewData["NiveauMin"]">
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <option value="@i">
+                            @i
+                        </option>
+                    }
+                </select>
+                |
+                @Html.Label("Niveau max")
+                <select name="niveauMax" asp-for="@ViewData["NiveauMax"]">
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <option value="@i">
+                            @i
+                        </option>
+                    }
+                </select>
+                |
+                @Html.Label("Nom")
+                <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                |
+                <input type="submit" value="Rechercher" /> |
+                <a asp-action="Index" class="btn">Supprimer le filtre</a>
+            </p>
+        </div>
+    </fieldset>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["NomSortParam"]"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-ecole="@ViewData["Ecole"]"
+                   asp-route-classe="@ViewData["Classe"]"
+                   asp-route-niveauMin="@ViewData["NiveauMin"]"
+                   asp-route-niveauMax="@ViewData["NiveauMax"]">
+                    Nom
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index"
+                   asp-route-sortOrder="@ViewData["NiveauSortParam"]"
+                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                   asp-route-ecole="@ViewData["Ecole"]"
+                   asp-route-classe="@ViewData["Classe"]"
+                   asp-route-niveauMin="@ViewData["NiveauMin"]"
+                   asp-route-niveauMax="@ViewData["NiveauMax"]">
+                    Niveau
+                </a>
+            </th>
+            <th>
+                Ecole
+            </th>
+            <th>
+                Rituel
+            </th>
+            <th>
+                Classes
+            </th>
+            <th></th>
+        </tr>
+    </thead>

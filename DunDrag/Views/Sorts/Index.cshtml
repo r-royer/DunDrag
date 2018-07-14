@@ -13,12 +13,12 @@
         <div class="form-actions no-color">
             <p>
                 @Html.Label("Ecole")
-                <select name="ecole" asp-for="@ViewData[" Ecole"]" asp-items="Html.GetEnumSelectList<Ecole>()">
+                <select name="ecole" asp-for="@ViewData["Ecole"]" asp-items="Html.GetEnumSelectList<Ecole>()">
                     <option value="-1" selected="selected"></option>
                 </select>
                 |
                 @Html.Label("Classe")
-                <select name="classe" asp-for="@ViewData["Classe"]" asp-items="(SelectList)@ViewData[" Classes"]">
+                <select name="classe" asp-for="@ViewData["Classe"]" asp-items="(SelectList)@ViewData["Classes"]">
                     <option value="-1" selected="selected"></option>
                 </select>
                 |
@@ -92,36 +92,98 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">
-                    @Html.DisplayFor(modelItem => item.Nom)
-                </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Niveau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ecole)
-            </td>
-            <td>
-                @if (item.Rituel)
-                {
-                    <i class="fas fa-check"></i>
-                }
-            </td>
-            <td>
-                @string.Join("; ", item.SortsClasses.Select(sc => sc.Classe.Nom))
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Source)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">
-                    <i class="fas fa-eye"></i>
-                </a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Niveau)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ecole)
+                </td>
+                <td>
+                    @if (item.Rituel)
+                    {
+                        <i class="fas fa-mortar-pestle"></i>
+                    }
+                </td>
+                <td>
+                    @string.Join("; ", item.SortsClasses.Select(sc => sc.Classe.Nom))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Source)
+                </td>
+                <td>
+                    <a class="btn btn-default" data-toggle="modal" data-target="@string.Concat("#modalSort", item.Id)">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <div class="modal fade" id="@string.Concat("modalSort", item.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-content" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <span class="modal-title h5" id="exampleModalLabel">
+                                        <span class="badge badge-info lead">@Html.DisplayFor(model => item.Niveau)</span>
+                                        @Html.DisplayFor(modelItem => item.Nom)
+                                        @if (item.Rituel)
+                                        {
+                                            <i class="fas fa-mortar-pestle"></i>
+                                        }
+                                        <br />
+                                        <i class="small">@Html.DisplayFor(model => item.Ecole)</i>
+                                    </span>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Incantation)</span>
+                                                    @Html.DisplayFor(model => item.Incantation)
+                                                </td>
+                                                <td>
+                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Duree)</span>
+                                                    @Html.DisplayFor(model => item.Duree)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Portee)</span>
+                                                    @Html.DisplayFor(model => item.Portee)
+                                                </td>
+                                                <td>
+                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Composantes)</span>
+                                                    @Html.DisplayFor(model => item.Composantes)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    @Html.Raw(item.Description)
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <span class="text-lg-left">
+                                        @Html.DisplayFor(model => item.Source)
+                                        -
+                                        @foreach (var classe in item.SortsClasses)
+                                        {
+                                            @string.Concat(classe.Classe.Nom, "; ")
+                                        }
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

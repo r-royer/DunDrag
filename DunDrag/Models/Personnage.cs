@@ -116,7 +116,7 @@ namespace DunDrag.Models
 
         public List<PersonnageCompetence> PersonnagesCompetences { get; } = new List<PersonnageCompetence>();
 
-        public List<PersonnageCaracteristique> PersonnagesCaracteristiques { get; } = new List<PersonnageCaracteristique>();
+        public virtual List<PersonnageCaracteristique> PersonnagesCaracteristiques { get; } = new List<PersonnageCaracteristique>();
 
         public int? CalculerModificateurCompetence(PersonnageCompetence personnageCompetence)
         {

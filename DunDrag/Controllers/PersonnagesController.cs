@@ -19,7 +19,10 @@ namespace DunDrag.Controllers
         // GET: Personnages
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Personnages.Include(p => p.Classe).ToListAsync());
+            return View(await _context.Personnages
+                .Include(p => p.Classe)
+                .AsNoTracking()
+                .ToListAsync());
         }
 
         // GET: Personnages/Details/5
@@ -38,7 +41,8 @@ namespace DunDrag.Controllers
                 .ThenInclude(pc => pc.Competence)
                 .Include(p => p.PersonnagesLangues)
                 .ThenInclude(pc => pc.Langue)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id.Value);
             if (personnage == null)
             {
                 return NotFound();

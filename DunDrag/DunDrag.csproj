@@ -1,29 +1,76 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180712100220_AjoutPersonnage.cs" />
+    <Compile Remove="Migrations\20180712100220_AjoutPersonnage.Designer.cs" />
+    <Compile Remove="Migrations\20180712114243_ClasseRace.cs" />
+    <Compile Remove="Migrations\20180712114243_ClasseRace.Designer.cs" />
     <Compile Remove="Migrations\20180712120112_Langue.cs" />
     <Compile Remove="Migrations\20180712120112_Langue.Designer.cs" />
+    <Compile Remove="Migrations\20180712120529_Langue.cs" />
+    <Compile Remove="Migrations\20180712120529_Langue.Designer.cs" />
     <Compile Remove="Migrations\20180712123916_Competence.cs" />
     <Compile Remove="Migrations\20180712123916_Competence.Designer.cs" />
+    <Compile Remove="Migrations\20180712130655_Caracteristique.cs" />
+    <Compile Remove="Migrations\20180712130655_Caracteristique.Designer.cs" />
+    <Compile Remove="Migrations\20180712131225_SortSource.cs" />
+    <Compile Remove="Migrations\20180712131225_SortSource.Designer.cs" />
+    <Compile Remove="Migrations\20180712143243_ClasseEnClass.cs" />
+    <Compile Remove="Migrations\20180712143243_ClasseEnClass.Designer.cs" />
     <Compile Remove="Migrations\20180713132855_DesDeVie.cs" />
     <Compile Remove="Migrations\20180713132855_DesDeVie.Designer.cs" />
     <Compile Remove="Migrations\20180713133203_DesDeVie.cs" />
     <Compile Remove="Migrations\20180713133203_DesDeVie.Designer.cs" />
+    <Compile Remove="Migrations\20180713133457_DesDeVie.cs" />
+    <Compile Remove="Migrations\20180713133457_DesDeVie.Designer.cs" />
+    <Compile Remove="Migrations\20180713135239_AutresCompetences.cs" />
+    <Compile Remove="Migrations\20180713135239_AutresCompetences.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Personnages\AjouterSort.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Data\sorts.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 
 </Project>

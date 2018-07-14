@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml;
-using System.Xml.Linq;
 using DunDrag.Models;
 
 namespace DunDrag.Data
@@ -53,8 +47,13 @@ namespace DunDrag.Data
                     new Classe
                     {
                         Nom = "Sorcier"
+                    },
+                    new Classe
+                    {
+                        Nom = "Roublard"
                     }
                 });
+
                 context.SaveChanges();
             }
 
@@ -92,18 +91,6 @@ namespace DunDrag.Data
                 }
             }
 
-            if (!context.Personnages.Any())
-            {
-                context.Personnages.AddRange(new List<Personnage>
-                {
-                    new Personnage
-                    {
-                        Nom = "Arkenos Entropie",
-                        Niveau = 5
-                    }
-                });
-            }
-
             if (!context.Langues.Any())
             {
                 context.Langues.AddRange(new List<Langue>
@@ -125,6 +112,29 @@ namespace DunDrag.Data
                     new Langue{ Nom = "Profond"},
                     new Langue{ Nom = "Sylvain"}
                 });
+
+                context.SaveChanges();
+            }
+
+            if (!context.Personnages.Any())
+            {
+                context.Personnages.AddRange(new List<Personnage>
+                {
+                    new Personnage
+                    {
+                        Nom = "Arkenos Entropie",
+                        Niveau = 5,
+                        Age = 25,
+                        Alignement = Alignement.NeutreBon,
+                        Classe = context.Classes.First(c => c.Nom == "Roublard"),
+                        TypeDesDeVie = "d 8",
+                        Vitesse = 9,
+                        Initiative = 3,
+                        ClasseArmure = 15
+                    }
+                });
+
+                context.SaveChanges();
             }
 
             if (!context.Competences.Any())
@@ -135,7 +145,7 @@ namespace DunDrag.Data
                     new Competence{ Nom = "Dressage", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
                     new Competence{ Nom = "Arcanes", CaracteristiqueAssociee = CaracteristiqueEnum.Force},
                     new Competence{ Nom = "Athlétisme", CaracteristiqueAssociee = CaracteristiqueEnum.Dexterite},
-                    new Competence{ Nom = "Tromperie", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
+                    new Competence{ Nom = "Supercherie", CaracteristiqueAssociee = CaracteristiqueEnum.Sagesse},
                     new Competence{ Nom = "Histoire", CaracteristiqueAssociee = CaracteristiqueEnum.Dexterite},
                     new Competence{ Nom = "Intimidation", CaracteristiqueAssociee = CaracteristiqueEnum.Intelligence},
                     new Competence{ Nom = "Investigation", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme},
@@ -150,6 +160,8 @@ namespace DunDrag.Data
                     new Competence{ Nom = "Discrétion", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme},
                     new Competence{ Nom = "Survie", CaracteristiqueAssociee = CaracteristiqueEnum.Charisme}
                 });
+
+                context.SaveChanges();
             }
 
             if (!context.Caracteristiques.Any())
@@ -163,9 +175,9 @@ namespace DunDrag.Data
                     new Caracteristique{ Nom = "Sagesse", CaracteristiqueEnum = CaracteristiqueEnum.Sagesse},
                     new Caracteristique{ Nom = "Charisme", CaracteristiqueEnum = CaracteristiqueEnum.Charisme}
                 });
-            }
 
-            context.SaveChanges();
+                context.SaveChanges();
+            }
         }
     }
 }
