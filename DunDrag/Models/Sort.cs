@@ -33,6 +33,7 @@ namespace DunDrag.Models
         [Required]
         public string Description { get; set; }
 
+        [Display(Name = "Résumé")]
         public string Resume { get; set; }
 
         public string Source { get; set; }

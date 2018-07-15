@@ -1,0 +1,64 @@
+﻿@model Sort
+
+<div class="modal fade" id="@string.Concat("modalSort", Model.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-content" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h5" id="exampleModalLabel">
+                    <span class="badge badge-info lead">@Html.DisplayFor(model => Model.Niveau)</span>
+                    @Html.DisplayFor(modelItem => Model.Nom)
+                    @if (Model.Rituel)
+                    {
+                        <i class="fas fa-mortar-pestle"></i>
+                    }
+                    <br />
+                    <i class="small">@Html.DisplayFor(model => Model.Ecole)</i>
+                </span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Incantation)</span>
+                                @Html.DisplayFor(model => Model.Incantation)
+                            </td>
+                            <td>
+                                <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Duree)</span>
+                                @Html.DisplayFor(model => Model.Duree)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Portee)</span>
+                                @Html.DisplayFor(model => Model.Portee)
+                            </td>
+                            <td>
+                                <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Composantes)</span>
+                                @Html.DisplayFor(model => Model.Composantes)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                @Html.Raw(Model.Description)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <span class="text-lg-left">
+                    @Html.DisplayFor(model => Model.Source)
+                    -
+                    @foreach (var classe in Model.SortsClasses)
+                    {
+                        @string.Concat(classe.Classe.Nom, "; ")
+                    }
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

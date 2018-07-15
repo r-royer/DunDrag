@@ -1,29 +1,37 @@
-﻿@using DunDrag.Tech
-@model PaginatedList<Sort>
+﻿@using DunDrag.ViewModels
+@model SortsViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Liste des sorts</h2>
+@if (!Model.PersonnageId.HasValue)
+{
+    <h2>Liste des sorts</h2>
+}
+else
+{
+    <h2>Choix des sorts pour @Model.Personnage.Nom</h2>
+}
+
 
 @using (Html.BeginForm())
 {
     <fieldset>
-        <div class="form-actions no-color">
+        <div>
             <p>
                 @Html.Label("Ecole")
-                <select name="ecole" asp-for="@ViewData["Ecole"]" asp-items="Html.GetEnumSelectList<Ecole>()">
+                <select name="ecole" asp-for="@Model.Ecole" asp-items="Html.GetEnumSelectList<Ecole>()">
                     <option value="-1" selected="selected"></option>
                 </select>
                 |
                 @Html.Label("Classe")
-                <select name="classe" asp-for="@ViewData["Classe"]" asp-items="(SelectList)@ViewData["Classes"]">
+                <select name="classe" asp-for="@Model.Classe" asp-items="(SelectList)@Model.Classes">
                     <option value="-1" selected="selected"></option>
                 </select>
                 |
                 @Html.Label("Niveau min")
-                <select name="niveauMin" asp-for="@ViewData["NiveauMin"]">
+                <select name="niveauMin" asp-for="@Model.NiveauMin">
                     @for (int i = 0; i < 10; i++)
                     {
                         <option value="@i">
@@ -33,7 +41,7 @@
                 </select>
                 |
                 @Html.Label("Niveau max")
-                <select name="niveauMax" asp-for="@ViewData["NiveauMax"]">
+                <select name="niveauMax" asp-for="@Model.NiveauMax">
                     @for (int i = 0; i < 10; i++)
                     {
                         <option value="@i">
@@ -43,10 +51,13 @@
                 </select>
                 |
                 @Html.Label("Nom")
-                <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input type="text" name="Recherche" value="@Model.Recherche" />
                 |
                 <input type="submit" value="Rechercher" /> |
-                <a asp-action="Index" class="btn">Supprimer le filtre</a>
+                @Html.HiddenFor(model => model.PersonnageId)
+                <a asp-action="Index" class="btn">
+                    Supprimer le filtre
+                </a>
             </p>
         </div>
     </fieldset>
@@ -57,23 +68,25 @@
         <tr>
             <th>
                 <a asp-action="Index"
-                   asp-route-sortOrder="@ViewData["NomSortParam"]"
-                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                   asp-route-ecole="@ViewData["Ecole"]"
-                   asp-route-classe="@ViewData["Classe"]"
-                   asp-route-niveauMin="@ViewData["NiveauMin"]"
-                   asp-route-niveauMax="@ViewData["NiveauMax"]">
+                   asp-route-SortOrder="@Model.NomSortParam"
+                   asp-route-Recherche="@Model.Recherche"
+                   asp-route-Ecole="@Model.Ecole"
+                   asp-route-Classe="@Model.Classe"
+                   asp-route-NiveauMin="@Model.NiveauMin"
+                   asp-route-NiveauMax="@Model.NiveauMax"
+                   asp-route-PersonnageId="@Model.PersonnageId">
                     Nom
                 </a>
             </th>
             <th>
                 <a asp-action="Index"
-                   asp-route-sortOrder="@ViewData["NiveauSortParam"]"
-                   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-                   asp-route-ecole="@ViewData["Ecole"]"
-                   asp-route-classe="@ViewData["Classe"]"
-                   asp-route-niveauMin="@ViewData["NiveauMin"]"
-                   asp-route-niveauMax="@ViewData["NiveauMax"]">
+                   asp-route-SortOrder="@Model.NiveauSortParam"
+                   asp-route-Recherche="@Model.Recherche"
+                   asp-route-Ecole="@Model.Ecole"
+                   asp-route-Classe="@Model.Classe"
+                   asp-route-NiveauMin="@Model.NiveauMin"
+                   asp-route-NiveauMax="@Model.NiveauMax"
+                   asp-route-PersonnageId="@Model.PersonnageId">
                     Niveau
                 </a>
             </th>
@@ -86,11 +99,18 @@
             <th>
                 Classes
             </th>
+            <th>
+                Source
+            </th>
             <th></th>
+            @if (Model.PersonnageId.HasValue)
+            {
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Sorts)
         {
             <tr>
                 <td>
@@ -99,7 +119,7 @@
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Niveau)
+                    <span class="badge badge-info h1">@Html.DisplayFor(model => item.Niveau)</span>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Ecole)
@@ -117,100 +137,58 @@
                     @Html.DisplayFor(modelItem => item.Source)
                 </td>
                 <td>
-                    <a class="btn btn-default" data-toggle="modal" data-target="@string.Concat("#modalSort", item.Id)">
+                    <a class="btn" data-toggle="modal" data-target="@string.Concat("#modalSort", item.Id)">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <div class="modal fade" id="@string.Concat("modalSort", item.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-content" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <span class="modal-title h5" id="exampleModalLabel">
-                                        <span class="badge badge-info lead">@Html.DisplayFor(model => item.Niveau)</span>
-                                        @Html.DisplayFor(modelItem => item.Nom)
-                                        @if (item.Rituel)
-                                        {
-                                            <i class="fas fa-mortar-pestle"></i>
-                                        }
-                                        <br />
-                                        <i class="small">@Html.DisplayFor(model => item.Ecole)</i>
-                                    </span>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Incantation)</span>
-                                                    @Html.DisplayFor(model => item.Incantation)
-                                                </td>
-                                                <td>
-                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Duree)</span>
-                                                    @Html.DisplayFor(model => item.Duree)
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Portee)</span>
-                                                    @Html.DisplayFor(model => item.Portee)
-                                                </td>
-                                                <td>
-                                                    <span class="font-weight-bold">@Html.DisplayNameFor(model => item.Composantes)</span>
-                                                    @Html.DisplayFor(model => item.Composantes)
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">
-                                                    @Html.Raw(item.Description)
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <span class="text-lg-left">
-                                        @Html.DisplayFor(model => item.Source)
-                                        -
-                                        @foreach (var classe in item.SortsClasses)
-                                        {
-                                            @string.Concat(classe.Classe.Nom, "; ")
-                                        }
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @await Html.PartialAsync("_DetailsSortPartial", item)
                 </td>
+                @if (Model.PersonnageId.HasValue)
+                {
+                <td>
+                    @if (item.PersonnagesSorts.Any(ps => ps.PersonnageId == Model.PersonnageId.Value))
+                    {
+                        <a class="btn" asp-action="SupprimerSortPersonnage" asp-route-personnageId="@Model.PersonnageId.Value" asp-route-sortId="@item.Id">
+                            <i class="fas fa-minus-square text-danger"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn" asp-action="AjouterSortPersonnage" asp-route-personnageId="@Model.PersonnageId.Value" asp-route-sortId="@item.Id">
+                            <i class="fas fa-plus-square text-success"></i>
+                        </a>
+                    }
+                </td>
+                }
             </tr>
         }
     </tbody>
 </table>
 @{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    var prevDisabled = !Model.Sorts.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Sorts.HasNextPage ? "disabled" : "";
 }
 
 <a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-page="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   asp-route-ecole="@ViewData["Ecole"]"
-   asp-route-classe="@ViewData["Classe"]"
-   asp-route-niveauMin="@ViewData["NiveauMin"]"
-   asp-route-niveauMax="@ViewData["NiveauMax"]"
-   class="btn btn-default @prevDisabled">
-    Previous
+   asp-route-SortOrder="@Model.SortOrder"
+   asp-route-PageIndex="@(Model.PageIndex - 1)"
+   asp-route-Recherche="@Model.Recherche"
+   asp-route-Ecole="@Model.Ecole"
+   asp-route-Classe="@Model.Classe"
+   asp-route-NiveauMin="@Model.NiveauMin"
+   asp-route-NiveauMax="@Model.NiveauMax"
+   asp-route-PersonnageId="@Model.PersonnageId"
+   class="btn btn-primary @prevDisabled">
+    Précédent
 </a>
 <a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-page="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   asp-route-ecole="@ViewData["Ecole"]"
-   asp-route-classe="@ViewData["Classe"]"
-   asp-route-niveauMin="@ViewData["NiveauMin"]"
-   asp-route-niveauMax="@ViewData["NiveauMax"]"
-   class="btn btn-default @nextDisabled">
-    Next
+   asp-route-SortOrder="@Model.SortOrder"
+   asp-route-PageIndex="@(Model.PageIndex + 1)"
+   asp-route-Recherche="@Model.Recherche"
+   asp-route-Ecole="@Model.Ecole"
+   asp-route-Classe="@Model.Classe"
+   asp-route-NiveauMin="@Model.NiveauMin"
+   asp-route-NiveauMax="@Model.NiveauMax"
+   asp-route-PersonnageId="@Model.PersonnageId"
+   class="btn btn-primary @nextDisabled">
+    Suivant
 </a>

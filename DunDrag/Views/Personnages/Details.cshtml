@@ -8,7 +8,14 @@
     <link href="@Url.Content("~/css/PersoSheet.css")" rel="stylesheet" type="text/css" />
 }
 
-    <h2>@Model.Nom</h2>
+<h2>@Model.Nom</h2>
+
+<div class="text-right">
+    <span>
+        @Html.ActionLink("Liste des sorts", "ListeSorts", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Modifier les sorts", "Index", "Sorts", null, null, null, new { PersonnageId = Model.Id }, new { @class = "btn btn-primary" })
+    </span>
+</div>
 
 <div>
     <form class="charsheet">
@@ -272,27 +279,27 @@
                             <ul>
                                 <li>
                                     @Html.LabelFor(model => model.PiecesCuivre)
-                                    @Html.TextBoxFor(model => model.PiecesCuivre, null, new {@readonly = true})
+                                    @Html.TextBoxFor(model => model.PiecesCuivre, null, new { @readonly = true })
                                 </li>
                                 <li>
                                     @Html.LabelFor(model => model.PiecesArgent)
-                                    @Html.TextBoxFor(model => model.PiecesArgent, null, new {@readonly = true})
+                                    @Html.TextBoxFor(model => model.PiecesArgent, null, new { @readonly = true })
                                 </li>
                                 <li>
                                     @Html.LabelFor(model => model.PiecesEthereum)
-                                    @Html.TextBoxFor(model => model.PiecesEthereum, null, new {@readonly = true})
+                                    @Html.TextBoxFor(model => model.PiecesEthereum, null, new { @readonly = true })
                                 </li>
                                 <li>
                                     @Html.LabelFor(model => model.PiecesOr)
-                                    @Html.TextBoxFor(model => model.PiecesOr, null, new {@readonly = true})
+                                    @Html.TextBoxFor(model => model.PiecesOr, null, new { @readonly = true })
                                 </li>
                                 <li>
                                     @Html.LabelFor(model => model.PiecesPlatine)
-                                    @Html.TextBoxFor(model => model.PiecesPlatine, null, new {@readonly = true})
+                                    @Html.TextBoxFor(model => model.PiecesPlatine, null, new { @readonly = true })
                                 </li>
                             </ul>
                         </div>
-                        @Html.TextArea("Equipement", "", new {@readonly = true})
+                        @Html.TextArea("Equipement", "", new { @readonly = true })
                     </div>
                 </section>
             </section>
@@ -300,7 +307,7 @@
                 <section class="flavor">
                     <div class="personality">
                         @Html.LabelFor(model => model.TraitsDePersonnalite)
-                        @Html.TextAreaFor(model => model.TraitsDePersonnalite, new {@readonly = true})
+                        @Html.TextAreaFor(model => model.TraitsDePersonnalite, new { @readonly = true })
                     </div>
                     <div class="ideals">
                         @Html.LabelFor(model => model.Ideaux)

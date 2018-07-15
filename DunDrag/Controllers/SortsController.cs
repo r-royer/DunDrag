@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using DunDrag.Data;
 using DunDrag.Models;
 using DunDrag.Tech;
+using DunDrag.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DunDrag.Controllers
@@ -20,65 +21,72 @@ namespace DunDrag.Controllers
         }
 
         // GET: Sorts
-        public async Task<IActionResult> Index(
-            Ecole? ecole,
-            int? classe,
-            string sortOrder,
-            string currentFilter,
-            string searchString,
-            int? page,
-            int? niveauMin,
-            int? niveauMax)
+        public async Task<IActionResult> Index(SortsViewModel sortsViewModel)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NomSortParam"] = String.IsNullOrEmpty(sortOrder) ? "nom_desc" : string.Empty;
-            ViewData["NiveauSortParam"] = String.IsNullOrEmpty(sortOrder) ? "niveau_desc" : "Niveau";
-            ViewData["Ecole"] = ecole;
-            ViewData["Classes"] = new SelectList(_context.Classes, "Id", "Nom");
-            ViewData["Classe"] = classe;
-            ViewData["NiveauMin"] = niveauMin ?? 0;
-            ViewData["NiveauMax"] = niveauMax ?? 9;
+            int? page = null;
+            if (sortsViewModel == null)
+            {
+                sortsViewModel = new SortsViewModel();
+            }
 
-            if (searchString != null)
+            if (sortsViewModel.NiveauMin == null)
+            {
+                sortsViewModel.NiveauMin = 0;
+                sortsViewModel.NiveauMax = 9;
+                sortsViewModel.SortOrder = sortsViewModel.SortOrder;
+                sortsViewModel.Ecole = sortsViewModel.Ecole;
+                sortsViewModel.Classe = sortsViewModel.Classe;
+                sortsViewModel.PageIndex = 1;
+            }
+
+            sortsViewModel.NomSortParam = String.IsNullOrEmpty(sortsViewModel.SortOrder) ? "nom_desc" : string.Empty;
+            sortsViewModel.NiveauSortParam = String.IsNullOrEmpty(sortsViewModel.SortOrder) ? "niveau_desc" : "Niveau";
+            sortsViewModel.Classes = new SelectList(_context.Classes, "Id", "Nom");
+
+            if (sortsViewModel.PersonnageId.HasValue)
+            {
+                sortsViewModel.Personnage =
+                    await _context
+                        .Personnages
+                        .FirstOrDefaultAsync(p => p.Id == sortsViewModel.PersonnageId.Value);
+            }
+
+            if (sortsViewModel.PageIndex.HasValue)
+            {
+                page = sortsViewModel.PageIndex.Value;
+            }
+
+            if (sortsViewModel.Recherche != null)
             {
                 page = 1;
             }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewData["CurrentFilter"] = searchString;
 
             var sorts = from s in _context.Sorts select s;
 
-            if (ecole.HasValue && ecole.Value != Ecole.Toutes)
+            if (sortsViewModel.Ecole.HasValue && sortsViewModel.Ecole.Value != Ecole.Toutes)
             {
-                sorts = sorts.Where(s => s.Ecole == ecole.Value);
+                sorts = sorts.Where(s => s.Ecole == sortsViewModel.Ecole.Value);
             }
 
-            if (classe.HasValue && classe.Value >= 0)
+            if (sortsViewModel.Classe.HasValue && sortsViewModel.Classe.Value >= 0)
             {
-                sorts = sorts.Where(s => s.SortsClasses.Any(sc => sc.ClasseId == classe.Value));
+                sorts = sorts.Where(s => s.SortsClasses.Any(sc => sc.ClasseId == sortsViewModel.Classe.Value));
             }
 
-            if (niveauMin.HasValue)
+            sorts = sorts.Where(s => s.Niveau >= sortsViewModel.NiveauMin);
+
+            if (sortsViewModel.NiveauMax.HasValue)
             {
-                sorts = sorts.Where(s => s.Niveau >= niveauMin);
+                sorts = sorts.Where(s => s.Niveau <= sortsViewModel.NiveauMax);
             }
 
-            if (niveauMax.HasValue)
+            if (!String.IsNullOrEmpty(sortsViewModel.Recherche))
             {
-                sorts = sorts.Where(s => s.Niveau <= niveauMax);
+                var recherche = sortsViewModel.Recherche.ToUpperInvariant();
+                sorts = sorts.Where(s => s.Nom.ToUpperInvariant().Contains(recherche));
             }
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                searchString = searchString.ToUpperInvariant();
-                sorts = sorts.Where(s => s.Nom.ToUpperInvariant().Contains(searchString));
-            }
-
-            switch (sortOrder)
+            switch (sortsViewModel.SortOrder)
             {
                 case "nom_desc":
                     sorts = sorts.OrderByDescending(s => s.Nom);
@@ -95,7 +103,13 @@ namespace DunDrag.Controllers
             }
 
             int pageSize = 10;
-            return View(await PaginatedList<Sort>.CreateAsync(sorts.Include(s => s.SortsClasses).ThenInclude(sc => sc.Classe).AsNoTracking(), page ?? 1, pageSize));
+            sortsViewModel.Sorts = await PaginatedList<Sort>
+                .CreateAsync(sorts
+                        .Include(s => s.SortsClasses)
+                        .ThenInclude(sc => sc.Classe)
+                        .Include(s => s.PersonnagesSorts)
+                        .AsNoTracking(), page ?? 1, pageSize);
+            return View(sortsViewModel);
         }
 
         // GET: Sorts/Details/5
@@ -117,6 +131,60 @@ namespace DunDrag.Controllers
             }
 
             return View(sort);
+        }
+        
+        public async Task<IActionResult> AjouterSortPersonnage(int personnageId, int sortId)
+        {
+            Personnage personnage = await _context.Personnages.FindAsync(personnageId);
+            if (personnage != null)
+            {
+                Sort sort = await _context.Sorts.FindAsync(sortId);
+                if (sort != null)
+                {
+                    if (personnage.PersonnagesSorts.All(ps => ps.SortId != sortId))
+                    {
+                        personnage.PersonnagesSorts.Add(new PersonnageSort
+                        {
+                            PersonnageId = personnageId,
+                            SortId = sortId
+                        });
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", new SortsViewModel
+            {
+                PersonnageId = personnageId
+            });
+        }
+
+        public async Task<IActionResult> SupprimerSortPersonnage(int personnageId, int sortId)
+        {
+            Personnage personnage = await _context
+                .Personnages
+                .Include(p => p.PersonnagesSorts)
+                .FirstOrDefaultAsync(p => p.Id == personnageId);
+            if (personnage != null)
+            {
+                Sort sort = await _context.Sorts.FindAsync(sortId);
+                if (sort != null)
+                {
+                    PersonnageSort personnageSort =
+                        personnage
+                            .PersonnagesSorts.Find(ps => ps.SortId == sortId);
+                    if (personnageSort != null)
+                    {
+                        personnage.PersonnagesSorts.Remove(personnageSort);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return RedirectToAction("Index", new SortsViewModel
+            {
+                PersonnageId = personnageId
+            });
         }
     }
 }

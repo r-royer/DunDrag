@@ -1,0 +1,50 @@
+﻿@model Sort
+
+<div class="col-sm-12 col-xl-4">
+    <div class="card">
+        <div class="card-header">
+            <span class="h6">
+                @Html.DisplayFor(modelItem => Model.Nom)
+                @if (Model.Rituel)
+                {
+                    <i class="fas fa-mortar-pestle"></i>
+                }
+                <span>
+                    <a class="btn" data-toggle="modal" data-target="@string.Concat("#modalSort", Model.Id)">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    @await Html.PartialAsync("_DetailsSortPartial", Model)
+                </span>
+                <br />
+                <span class="badge badge-info lead">@Html.DisplayFor(model => Model.Niveau)</span>
+                <i class="small">@Html.DisplayFor(model => Model.Ecole)</i>
+            </span>
+        </div>
+        <div class="card-body">
+            <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Incantation)</span>
+            @Html.DisplayFor(model => Model.Incantation)
+            <br />
+            <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Duree)</span>
+            @Html.DisplayFor(model => Model.Duree)
+            <br />
+            <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Portee)</span>
+            @Html.DisplayFor(model => Model.Portee)
+            <br />
+            <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Composantes)</span>
+            @Html.DisplayFor(model => Model.Composantes)
+            <br />
+            <span class="font-weight-bold">@Html.DisplayNameFor(model => Model.Resume)</span>
+            @Html.DisplayFor(model => Model.Resume)
+        </div>
+        <div class="card-footer text-muted">
+            <span class="text-lg-left">
+                @Html.DisplayFor(model => Model.Source)
+                -
+                @foreach (var classe in Model.SortsClasses)
+                {
+                    @string.Concat(classe.Classe.Nom, "; ")
+                }
+            </span>
+        </div>
+    </div>
+</div>

@@ -25,6 +25,29 @@ namespace DunDrag.Controllers
                 .ToListAsync());
         }
 
+        public async Task<IActionResult> ListeSorts(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var personnage = await _context.Personnages
+                .Include(p => p.Classe)
+                .Include(p => p.PersonnagesSorts)
+                .ThenInclude(ps => ps.Sort)
+                .ThenInclude(s => s.SortsClasses)
+                .ThenInclude(sc => sc.Classe)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id.Value);
+            if (personnage == null)
+            {
+                return NotFound();
+            }
+
+            return View(personnage);
+        }
+
         // GET: Personnages/Details/5
         public async Task<IActionResult> Details(int? id)
         {

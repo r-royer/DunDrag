@@ -1,11 +1,14 @@
-﻿@model DunDrag.Models.Personnage
+﻿@model Personnage
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Liste des sorts de @Model.Nom</h2>
-
-<p>
-
-</p>
+   
+<div class="row">
+    @foreach (PersonnageSort personnageSort in Model.PersonnagesSorts)
+    {
+        @await Html.PartialAsync("_DetailsSortMinPartial", personnageSort.Sort)
+    }
+</div>
