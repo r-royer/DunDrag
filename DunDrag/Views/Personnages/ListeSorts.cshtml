@@ -5,10 +5,64 @@
 }
 
 <h2>Liste des sorts de @Model.Nom</h2>
-   
-<div class="row">
-    @foreach (PersonnageSort personnageSort in Model.PersonnagesSorts)
-    {
-        @await Html.PartialAsync("_DetailsSortMinPartial", personnageSort.Sort)
-    }
+
+@*<div class="row">
+        @foreach (PersonnageSort personnageSort in Model.PersonnagesSorts)
+        {
+            @await Html.PartialAsync("_DetailsSortMinPartial", personnageSort.Sort)
+        }
+    </div>*@
+
+<div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="tous" aria-selected="true" href="#tous">Tous</a>
+        </li>
+        @for (int i = 0; i < 10; i++)
+        {
+            if (i == 0 || Model.ChargesSorts.Any(cs => cs.NiveauSort == i))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" role="tab" aria-controls="@string.Concat("#niveau", i)" aria-selected="false" href="@string.Concat("#niveau", i)">Niveau @i</a>
+                </li>
+            }
+        }
+    </ul>
+
+    <div class="tab-content">
+        <div id="tous" class="tab-pane fade show active" role="tabpanel" aria-labelledby="tous-tab">
+            <div class="row">
+                @foreach (PersonnageSort personnageSort in Model.PersonnagesSorts.OrderBy(ps => ps.Sort.Niveau))
+                {
+                    @await Html.PartialAsync("_DetailsSortMinPartial", personnageSort.Sort)
+                }
+            </div>
+        </div>
+        <div id="niveau0" class="tab-pane fade" role="tabpanel" aria-labelledby="niveau0-tab">
+            <div class="row">
+                @foreach (PersonnageSort personnageSort in Model.PersonnagesSorts.Where(ps => ps.Sort.Niveau == 0))
+                {
+                    @await Html.PartialAsync("_DetailsSortMinPartial", personnageSort.Sort)
+                }
+            </div>
+        </div>
+        @for (int i = 1; i < 10; i++)
+        {
+            if (Model.ChargesSorts.Any(cs => cs.NiveauSort == i))
+            {
+                <div id="@string.Concat("niveau", i)" class="tab-pane fade" role="tabpanel" aria-labelledby="@string.Concat("niveau", i, "-tab")">
+                    <span>
+                        <strong>Charges disponibles</strong>
+                        @string.Format("{0} / {1}", Model.ChargesSorts.First(cs => cs.NiveauSort == i).ChargesRestantes, Model.ChargesSorts.First(cs => cs.NiveauSort == i).ChargesTotales)
+                    </span>
+                    <div class="row">
+                        @foreach (PersonnageSort personnageSort in Model.PersonnagesSorts.Where(ps => ps.Sort.Niveau == i))
+                        {
+                            @await Html.PartialAsync("_DetailsSortMinPartial", personnageSort.Sort)
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>

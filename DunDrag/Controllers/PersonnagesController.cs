@@ -38,6 +38,7 @@ namespace DunDrag.Controllers
                 .ThenInclude(ps => ps.Sort)
                 .ThenInclude(s => s.SortsClasses)
                 .ThenInclude(sc => sc.Classe)
+                .Include(sc => sc.ChargesSorts)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id.Value);
             if (personnage == null)

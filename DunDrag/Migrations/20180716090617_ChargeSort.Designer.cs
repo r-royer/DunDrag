@@ -3,18 +3,30 @@ using System;
 using DunDrag.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DunDrag.Migrations
 {
     [DbContext(typeof(DunDragContext))]
-    partial class DunDragContextModelSnapshot : ModelSnapshot
+    [Migration("20180716090617_ChargeSort")]
+    partial class ChargeSort
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+
+            modelBuilder.Entity("DunDrag.Models.Arme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Armes");
+                });
 
             modelBuilder.Entity("DunDrag.Models.Caracteristique", b =>
                 {
@@ -35,11 +47,9 @@ namespace DunDrag.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ChargesRestantes");
-
-                    b.Property<int>("ChargesTotales");
-
                     b.Property<int>("NiveauSort");
+
+                    b.Property<int>("NombreCharges");
 
                     b.Property<int?>("PersonnageId");
 

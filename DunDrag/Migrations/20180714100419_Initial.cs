@@ -7,18 +7,6 @@ namespace DunDrag.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Armes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Armes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Caracteristiques",
                 columns: table => new
                 {
@@ -306,9 +294,6 @@ namespace DunDrag.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Armes");
-
             migrationBuilder.DropTable(
                 name: "PersonnageCaracteristique");
 

@@ -145,7 +145,22 @@ namespace DunDrag.Data
                         TypeDesDeVie = "d 8",
                         Vitesse = 9,
                         Initiative = 3,
-                        ClasseArmure = 15
+                        ClasseArmure = 15,
+                        ChargesSorts =
+                        {
+                            new ChargeSort
+                            {
+                                NiveauSort = 1,
+                                ChargesTotales = 3,
+                                ChargesRestantes = 1
+                            },
+                            new ChargeSort
+                            {
+                                NiveauSort = 2,
+                                ChargesTotales = 2,
+                                ChargesRestantes = 0
+                            }
+                        }
                     }
                 });
 
