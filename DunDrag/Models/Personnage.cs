@@ -110,6 +110,8 @@ namespace DunDrag.Models
 
         public int BonusAttaqueAvecSort { get; set; }
 
+        public byte[] Image { get; set; }
+
         public List<PersonnageLangue> PersonnagesLangues { get; } = new List<PersonnageLangue>();
 
         public List<PersonnageSort> PersonnagesSorts { get; } = new List<PersonnageSort>();

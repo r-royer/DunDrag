@@ -9,6 +9,21 @@
 <p>
     <a asp-action="Create">Créer un nouveau personnage</a>
 </p>
+
+<div class="row">
+    @foreach (var personnage in Model)
+    {
+    <div class="col-sm-12 col-xl-4">
+        <div class="card">
+            <img class="card-img-top" src=".../100px180/?text=Image cap" alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
 <table class="table">
     <thead>
         <tr>

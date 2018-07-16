@@ -1,16 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
 using DunDrag.Models;
 
 namespace DunDrag.Data
 {
     public class DbInitializer
     {
+
         public static void Initialize(DunDragContext context)
         {
             context.Database.EnsureCreated();
+
+            //byte[] byteArray;
+            //using (var inputStream = new FileStream(@"C:\Users\Remi\Desktop\archenos.jpg", FileMode.Open))
+            //{
+            //    byteArray = new byte[inputStream.Length];
+            //    inputStream.Read(byteArray, 0, byteArray.Length);
+            //}
+
+            //context.Personnages.First().Image = byteArray;
+            //context.SaveChanges();
 
             if (!context.Classes.Any())
             {
@@ -178,6 +193,15 @@ namespace DunDrag.Data
 
                 context.SaveChanges();
             }
+        }
+        private static Ecole DecodeLibelleEcole(string ecole)
+        {
+            if (Enum.TryParse(typeof(Ecole), ecole.Replace("é", "e"), true, out var enumEcole))
+            {
+                return (Ecole)enumEcole;
+            }
+
+            throw new Exception();
         }
     }
 }
