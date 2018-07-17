@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DunDrag.Data;
 using DunDrag.Models;
+using DunDrag.ViewModels;
 
 namespace DunDrag.Controllers
 {
@@ -78,7 +80,12 @@ namespace DunDrag.Controllers
         // GET: Personnages/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new CreationPersonnageViewModel
+            {
+                Etape = 1,
+                Races = Enum.GetValues(typeof(Race)).Cast<Race>().ToList(),
+                Personnage = new Personnage()
+            });
         }
 
         // POST: Personnages/Create

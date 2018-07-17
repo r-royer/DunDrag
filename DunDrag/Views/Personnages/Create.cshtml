@@ -1,4 +1,4 @@
-﻿@model Personnage
+﻿@model DunDrag.ViewModels.CreationPersonnageViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -6,14 +6,35 @@
 
 <h2>Création d'un personnage</h2>
 
-<div class="row">
-    <div class="col-md-4">
+@Html.BeginForm()
+{
+    <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="race" aria-selected="true" href="#race">Race</a>
+            </li>
+        </ul>
 
+        <div class="tab-content">
+            <div id="race" class="tab-pane fade show active" role="tabpanel" aria-labelledby="race-tab">
+                <div class="row">
+                    @foreach (Race race in Model.Races)
+                    {
+                        <div class="card text-center col-sm-12 col-xl-2" style="overflow: hidden; height:200px; margin-top:10px;">
+                            <span style="height: 150px; margin-top: 10px;">
+                                <img class="card-img-top" style="height: 100%;" src="~/images/@string.Concat(race, ".jpg")" alt="Card image cap">
+                            </span>
+                            <h5 class="card-title">@Html.DisplayFor(model => race)</h5>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
+<a asp-action="Index">Retour à la liste</a>
 
 <div>
-    <a asp-action="Index">Retour à la liste</a>
 </div>
 
 @section Scripts {
