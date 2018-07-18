@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DunDrag.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DunDrag.ViewModels
 {
@@ -10,5 +11,7 @@ namespace DunDrag.ViewModels
         public Personnage Personnage { get; set; }
 
         public List<Race> Races { get; set; }
+
+        public List<Classe> Classes { get; set; }
     }
 }

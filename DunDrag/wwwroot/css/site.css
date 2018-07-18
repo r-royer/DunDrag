@@ -40,3 +40,13 @@ body {
     text-overflow: ellipsis;
     width : 30px
 }
+
+.img-card-unselected {
+    opacity: 0.3;
+}
+
+.img-card {
+    height: 100%;
+}
+
+

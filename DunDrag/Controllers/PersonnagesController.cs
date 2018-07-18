@@ -84,6 +84,7 @@ namespace DunDrag.Controllers
             {
                 Etape = 1,
                 Races = Enum.GetValues(typeof(Race)).Cast<Race>().ToList(),
+                Classes = _context.Classes.ToList(),
                 Personnage = new Personnage()
             });
         }
@@ -93,7 +94,7 @@ namespace DunDrag.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Classe,Race,Experience,ClasseArmure,Initiative,Vitesse,PvMaximum,PvTemporaires,PvActuels,DesDeVie,Nom,Niveau,Taille,Age,Yeux,Peau,Cheveux,Poids,Historique,NomJoueur,Alignement,TraitsDePersonnalite,Ideaux,Liens,Defauts,PiecesCuivre,PiecesArgent,PiecesEthereum,PiecesOr,PiecesPlatine,DesDeSauvegardeContreSorts,BonusAttaqueAvecSort")] Personnage personnage)
+        public async Task<IActionResult> Create([Bind("Classe,Race,Experience,ClasseArmure,Initiative,Vitesse,PvMaximum,PvTemporaires,PvActuels,DesDeVie,Nom,Niveau,Taille,Age,Yeux,Peau,Cheveux,Poids,Historique,NomJoueur,Alignement,TraitsDePersonnalite,Ideaux,Liens,Defauts,PiecesCuivre,PiecesArgent,PiecesEthereum,PiecesOr,PiecesPlatine,DesDeSauvegardeContreSorts,BonusAttaqueAvecSort")] Personnage personnage)
         {
             if (ModelState.IsValid)
             {
