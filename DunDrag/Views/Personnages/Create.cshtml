@@ -1,4 +1,5 @@
-﻿@model DunDrag.ViewModels.CreationPersonnageViewModel
+﻿@using DunDrag.Tech
+@model DunDrag.ViewModels.CreationPersonnageViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -25,14 +26,14 @@
                 <div class="row">
                     @foreach (var race in Model.Races)
                     {
-                        <div class="card text-center col-sm-12 col-xl-2" style="overflow: hidden; height: 200px; margin-top: 10px;">
-                            <span style="height: 150px; margin-top: 10px;">
+                        <div class="card text-center col-sm-12 col-xl-2" style="height: 200px; margin-top: 10px;">
+                            <div style="height: 150px; margin-top: 10px; overflow: hidden">
                                 <img class="card-img-top img-card img-card-unselected"
                                      onclick="changeRace(@Convert.ToInt32(race))"
                                      id="@string.Concat("img-card-race", Convert.ToInt32(race))"
                                      src="~/images/@string.Concat(race, ".jpg")"
                                      alt="Card image cap">
-                            </span>
+                            </div>
                             <h5 class="card-title">
                                 @Html.DisplayFor(model => race)
                             </h5>
@@ -44,19 +45,26 @@
                 <div class="row">
                     @foreach (var classe in Model.Classes)
                     {
-                        <div class="card text-center col-sm-12 col-xl-2" style="overflow: hidden; height: 200px; margin-top: 10px;">
-                            <span style="height: 150px; margin-top: 10px;">
+                        <div class="card text-center col-sm-12 col-xl-2" style="height: 200px; margin-top: 10px;">
+                            <div style="height: 150px; margin-top: 10px; overflow: hidden">
                                 <img class="card-img-top img-card img-card-unselected"
                                      onclick="changeClasse(@classe.Id)"
                                      id="@string.Concat("img-card-classe", classe.Id)"
-                                     src="~/images/@string.Concat(classe.Nom, ".jpg")"
+                                     src="~/images/@string.Concat(classe.Nom.RemoveDiacritics(), ".jpg")"
                                      alt="Card image cap">
-                            </span>
+                            </div>
                             <h5 class="card-title">
                                 @Html.DisplayFor(model => classe.Nom)
                             </h5>
                         </div>
                     }
+                </div>
+                <br/>
+                <div>
+                    Choisissez le niveau du personnage
+                    <a onclick="changeNiveau(-1)">-</a>
+                    @Html.TextBoxFor(model => model.Personnage.Niveau)
+                    <a onclick="changeNiveau(1)">+</a>
                 </div>
             </div>
         </div>
