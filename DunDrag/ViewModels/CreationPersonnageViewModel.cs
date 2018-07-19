@@ -13,5 +13,7 @@ namespace DunDrag.ViewModels
         public List<Race> Races { get; set; }
 
         public List<Classe> Classes { get; set; }
+
+        public List<Historique> Historiques { get; set; }
     }
 }

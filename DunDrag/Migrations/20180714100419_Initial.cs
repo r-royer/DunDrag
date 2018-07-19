@@ -109,7 +109,6 @@ namespace DunDrag.Migrations
                     Peau = table.Column<string>(nullable: true),
                     Cheveux = table.Column<string>(nullable: true),
                     Poids = table.Column<decimal>(nullable: false),
-                    Historique = table.Column<string>(nullable: true),
                     NomJoueur = table.Column<string>(nullable: true),
                     Alignement = table.Column<int>(nullable: false),
                     TraitsDePersonnalite = table.Column<string>(nullable: true),

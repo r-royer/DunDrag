@@ -85,6 +85,7 @@ namespace DunDrag.Controllers
                 Etape = 1,
                 Races = Enum.GetValues(typeof(Race)).Cast<Race>().ToList(),
                 Classes = _context.Classes.ToList(),
+                Historiques = _context.Historiques.ToList(),
                 Personnage = new Personnage()
             });
         }

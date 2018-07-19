@@ -11,6 +11,7 @@
 {
     @Html.HiddenFor(model => model.Personnage.Race)
     @Html.HiddenFor(model => model.Personnage.Classe.Id)
+    @Html.HiddenFor(model => model.Personnage.Historique.Id)
     <div class="container">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
@@ -18,6 +19,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" role="tab" aria-controls="classe" aria-selected="true" href="#classe">Classe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" role="tab" aria-controls="niveau" aria-selected="true" href="#niveau">Niveau</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" role="tab" aria-controls="historique" aria-selected="true" href="#historique">Historique</a>
             </li>
         </ul>
 
@@ -59,12 +66,32 @@
                         </div>
                     }
                 </div>
-                <br/>
-                <div>
-                    Choisissez le niveau du personnage
-                    <a onclick="changeNiveau(-1)">-</a>
-                    @Html.TextBoxFor(model => model.Personnage.Niveau)
-                    <a onclick="changeNiveau(1)">+</a>
+            </div>
+            <div id="niveau" class="tab-pane fade show" role="tabpanel" aria-labelledby="niveau-tab">
+                <div class="row">
+                    @Html.Label("Choisissez le niveau du personnage")
+                    <br />
+                    @Html.EditorFor(model => model.Personnage.Niveau, new { htmlAttributes = new { type = "number", min = "1", max = "20", @class = "form-control" } })
+                </div>
+            </div>
+            <div id="historique" class="tab-pane fade show" role="tabpanel" aria-labelledby="historique-tab">
+                <div class="row">
+                    @foreach (var historique in Model.Historiques)
+                    {
+                        <div class="card text-center col-sm-12 col-xl-2" style="height: 200px; margin-top: 10px;">
+                            <div style="height: 150px; margin-top: 10px; overflow: hidden">
+                                <img class="card-img-top img-card img-card-unselected"
+                                     onclick="changeHistorique(@historique.Id)"
+                                     id="@string.Concat("img-card-historique", historique.Id)"
+                                     @*src="~/images/@string.Concat(historique.Nom.RemoveDiacritics(), ".jpg")"*@
+                                     src="~/images/barde.jpg"
+                                     alt="Card image cap">
+                            </div>
+                            <h5 class="card-title">
+                                @Html.DisplayFor(model => historique.Nom)
+                            </h5>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

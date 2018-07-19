@@ -20,9 +20,12 @@ namespace DunDrag.Data
         public DbSet<Caracteristique> Caracteristiques { get; set; }
 
         public DbSet<Classe> Classes { get; set; }
-        
+
+        public DbSet<Historique> Historiques { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Historique>().ToTable("Historiques");
             modelBuilder.Entity<Classe>().ToTable("Classes");
             modelBuilder.Entity<Caracteristique>().ToTable("Caracteristiques");
             modelBuilder.Entity<Competence>().ToTable("Competences");

@@ -71,7 +71,7 @@ namespace DunDrag.Models
         [Range(0, 500)]
         public decimal Poids { get; set; }
 
-        public string Historique { get; set; }
+        public Historique Historique { get; set; }
 
         [Display(Name = "Joueur")]
         public string NomJoueur { get; set; }

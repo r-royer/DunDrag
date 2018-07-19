@@ -19,10 +19,16 @@ function changeClasse(classe) {
     $('#Personnage_Classe_Id').val(classe);
 }
 
+function changeHistorique(historique) {
+    $("img[id^='img-card-historique']").addClass("img-card-unselected");
+    var id = '#img-card-historique' + historique;
+    $(id).removeClass("img-card-unselected");
+    $('#Personnage_Historique_Id').val(historique);
+}
+
 function changeNiveau(sens) {
     var old = parseInt($('#Personnage_Niveau').text());
-    if ((old > 1 || sens == 1) && (old < NIVMAX || sens == -1)) {
-        $('#level').html(old + sens);
-        levelSelected = (old + sens);
+    if ((old > 1 || sens === 1) && (old < NIVMAX || sens === -1)) {
+        $('#Personnage_Niveau').html(old + sens);
     }
 }

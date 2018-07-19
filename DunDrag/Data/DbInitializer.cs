@@ -27,6 +27,67 @@ namespace DunDrag.Data
             //context.Personnages.First().Image = byteArray;
             //context.SaveChanges();
 
+            if (!context.Historiques.Any())
+            {
+                context.Historiques.AddRange(new List<Historique>
+                {
+                    new Historique
+                    {
+                        Nom = "Acolyte"
+                    },
+                    new Historique
+                    {
+                        Nom = "Artisan de guilde"
+                    },
+                    new Historique
+                    {
+                        Nom = "Artiste"
+                    },
+                    new Historique
+                    {
+                        Nom = "Charlatan"
+                    },
+                    new Historique
+                    {
+                        Nom = "Criminel"
+                    },
+                    new Historique
+                    {
+                        Nom = "Enfant des rues"
+                    },
+                    new Historique
+                    {
+                        Nom = "Ermite"
+                    },
+                    new Historique
+                    {
+                        Nom = "Héros du peuple"
+                    },
+                    new Historique
+                    {
+                        Nom = "Marin"
+                    },
+                    new Historique
+                    {
+                        Nom = "Noble"
+                    },
+                    new Historique
+                    {
+                        Nom = "Sage"
+                    },
+                    new Historique
+                    {
+                        Nom = "Sauvageon"
+                    },
+                    new Historique
+                    {
+                        Nom = "Soldat"
+                    }
+                });
+
+                context.SaveChanges();
+            }
+
             if (!context.Classes.Any())
             {
                 context.Classes.AddRange(new List<Classe>
