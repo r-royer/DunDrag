@@ -4,6 +4,11 @@ body {
     padding-bottom: 20px;
 }
 
+h2 {
+   margin: 1.5rem;
+}
+
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
