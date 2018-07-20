@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -80,13 +81,21 @@ namespace DunDrag.Controllers
         // GET: Personnages/Create
         public IActionResult Create()
         {
+            Personnage personnage = new Personnage();
+            personnage.PersonnagesCaracteristiques.AddRange(
+                _context.Caracteristiques.Select(c => new PersonnageCaracteristique
+                {
+                    Personnage = personnage,
+                    CaracteristiqueId = c.Id,
+                    Caracteristique = c
+                }).ToList());
             return View(new CreationPersonnageViewModel
             {
                 Etape = 1,
                 Races = Enum.GetValues(typeof(Race)).Cast<Race>().ToList(),
                 Classes = _context.Classes.ToList(),
                 Historiques = _context.Historiques.ToList(),
-                Personnage = new Personnage()
+                Personnage = personnage
             });
         }
 
@@ -95,14 +104,23 @@ namespace DunDrag.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Classe,Race,Experience,ClasseArmure,Initiative,Vitesse,PvMaximum,PvTemporaires,PvActuels,DesDeVie,Nom,Niveau,Taille,Age,Yeux,Peau,Cheveux,Poids,Historique,NomJoueur,Alignement,TraitsDePersonnalite,Ideaux,Liens,Defauts,PiecesCuivre,PiecesArgent,PiecesEthereum,PiecesOr,PiecesPlatine,DesDeSauvegardeContreSorts,BonusAttaqueAvecSort")] Personnage personnage)
+        public async Task<IActionResult> Create([Bind("Classe,Race,Experience,ClasseArmure,Initiative,Vitesse,PvMaximum,PvTemporaires,PvActuels,DesDeVie,Nom,Niveau,Taille,Age,Yeux,Peau,Cheveux,Poids,Historique,NomJoueur,Alignement,TraitsDePersonnalite,Ideaux,Liens,Defauts,PiecesCuivre,PiecesArgent,PiecesEthereum,PiecesOr,PiecesPlatine,DesDeSauvegardeContreSorts,BonusAttaqueAvecSort")] Personnage personnage, List<PersonnageCaracteristique> personnageCaracteristiques)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(personnage);
                 await _context.SaveChangesAsync();
+
+                foreach (var personnageCaracteristique in personnageCaracteristiques)
+                {
+                    personnageCaracteristique.PersonnageId = personnage.Id;
+                    personnage.PersonnagesCaracteristiques.Add(personnageCaracteristique);
+                }
+
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(personnage);
         }
 

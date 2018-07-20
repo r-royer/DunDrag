@@ -57,13 +57,14 @@ namespace DunDrag.Migrations
                     PiecesOr = table.Column<int>(nullable: false),
                     PiecesPlatine = table.Column<int>(nullable: false),
                     DesDeSauvegardeContreSorts = table.Column<int>(nullable: false),
-                    BonusAttaqueAvecSort = table.Column<int>(nullable: false)
+                    BonusAttaqueAvecSort = table.Column<int>(nullable: false),
+                    Image = table.Column<byte[]>(nullable:true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Personnages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Personnages_Classes_ClasseId",
+                        name: "FK_Personnages_Classe_ClasseId",
                         column: x => x.ClasseId,
                         principalTable: "Classes",
                         principalColumn: "Id",
@@ -80,11 +81,6 @@ namespace DunDrag.Migrations
                 name: "IX_Personnages_HistoriqueId",
                 table: "Personnages",
                 column: "HistoriqueId");
-
-            migrationBuilder.AddColumn<byte[]>(
-                name: "Image",
-                table: "Personnages",
-                nullable: true);
 
             migrationBuilder.Sql("INSERT INTO Personnages SELECT * FROM Personnages_Old");
             migrationBuilder.DropTable("Personnages_Old");

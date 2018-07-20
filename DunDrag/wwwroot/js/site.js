@@ -32,3 +32,42 @@ function changeNiveau(sens) {
         $('#Personnage_Niveau').html(old + sens);
     }
 }
+
+function changeCaracteristique(element, caracteristiqueId) {
+    var value = $(element).val();
+    var id = "#td-caracteristique" + caracteristiqueId;
+    $(id).html(value);
+    var inputName = "input[name='valeur-caracteristique" + caracteristiqueId + "'";
+    $(inputName).val(value);
+    var modifieur = -4;
+    if (value >= 20) {
+        modifieur = 5;
+    }
+    else if (value >= 18) {
+        modifieur = 4;
+    }
+    else if (value >= 16) {
+        modifieur = 3;
+    }
+    else if (value >= 14) {
+        modifieur = 2;
+    }
+    else if (value >= 12) {
+        modifieur = 1;
+    }
+    else if (value >= 10) {
+        modifieur = 0;
+    }
+    else if (value >= 8) {
+        modifieur = -1;
+    }
+    else if (value >= 6) {
+        modifieur = -2;
+    }
+    else if (value >= 4) {
+        modifieur = -3;
+    }
+
+    id = "#td-modifieur" + caracteristiqueId;
+    $(id).html(modifieur);
+}
