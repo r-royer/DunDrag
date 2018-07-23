@@ -6,6 +6,8 @@ namespace DunDrag.Models
     {
         public int Id { get; set; }
 
+        public string Cle { get; set; }
+
         public string Nom { get; set; }
 
         public List<SortClasse> SortsClasses { get; } = new List<SortClasse>();

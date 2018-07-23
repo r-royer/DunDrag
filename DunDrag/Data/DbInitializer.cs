@@ -94,39 +94,48 @@ namespace DunDrag.Data
                 {
                     new Classe
                     {
-                        Nom = "Barde"
+                        Nom = "Barde",
+                        Cle = Constantes.Classes.Barde
                     },
                     new Classe
                     {
-                        Nom = "Clerc"
+                        Nom = "Clerc",
+                        Cle = Constantes.Classes.Clerc
                     },
                     new Classe
                     {
-                        Nom = "Druide"
+                        Nom = "Druide",
+                        Cle = Constantes.Classes.Druide
                     },
                     new Classe
                     {
-                        Nom = "Ensorceleur"
+                        Nom = "Ensorceleur",
+                        Cle = Constantes.Classes.Ensorceleur
                     },
                     new Classe
                     {
-                        Nom = "Magicien"
+                        Nom = "Magicien",
+                        Cle = Constantes.Classes.Magicien
                     },
                     new Classe
                     {
-                        Nom = "Paladin"
+                        Nom = "Paladin",
+                        Cle = Constantes.Classes.Paladin
                     },
                     new Classe
                     {
-                        Nom = "Rôdeur"
+                        Nom = "Rôdeur",
+                        Cle = Constantes.Classes.Rodeur
                     },
                     new Classe
                     {
-                        Nom = "Sorcier"
+                        Nom = "Sorcier",
+                        Cle = Constantes.Classes.Sorcier
                     },
                     new Classe
                     {
-                        Nom = "Roublard"
+                        Nom = "Roublard",
+                        Cle = Constantes.Classes.Roublard
                     }
                 });
 

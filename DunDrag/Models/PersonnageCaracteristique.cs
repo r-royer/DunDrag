@@ -7,11 +7,11 @@ namespace DunDrag.Models
     {
         public int CaracteristiqueId { get; set; }
 
-        public virtual Caracteristique Caracteristique { get; set; }
+        public Caracteristique Caracteristique { get; set; }
 
         public int PersonnageId { get; set; }
 
-        public virtual Personnage Personnage { get; set; }
+        public Personnage Personnage { get; set; }
 
         public int Valeur { get; set; }
 

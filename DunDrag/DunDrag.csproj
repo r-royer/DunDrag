@@ -71,4 +71,8 @@
     <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tech\Extensions\" />
+  </ItemGroup>
+
 </Project>

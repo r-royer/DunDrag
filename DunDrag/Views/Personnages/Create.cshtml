@@ -122,9 +122,8 @@
                                     <td>
                                         @Html.TextBox(string.Concat("[", i, "].Valeur"), personnageCaracteristique.Valeur, new { @class = "form-control", max = "18", min = "3", type = "number", value = "1", onchange = "changeCaracteristique(this, @personnageCaracteristique.CaracteristiqueId);" })
                                     </td>
-                                    <td></td>
+                                    <td cle-c=""></td>
                                     <td id="@string.Concat("td-caracteristique", personnageCaracteristique.CaracteristiqueId)">
-                                        @Html.DisplayTextFor(model => personnageCaracteristique.Valeur)
                                     </td>
                                     <td id="@string.Concat("td-modifieur", personnageCaracteristique.CaracteristiqueId)"></td>
                                 </tr>
